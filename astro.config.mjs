@@ -39,7 +39,7 @@ export default defineConfig({
     defaultStrategy: "hover"
   },
   
-  site: "http://localhost:4321/",
+  site: "https://crloxa.github.io",
   base: "/",
   trailingSlash: "always",
 
