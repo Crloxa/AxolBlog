@@ -1,0 +1,42 @@
+---
+import type { MarkdownHeading } from "astro";
+import Categories from "./Categories.astro";
+import Profile from "./Profile.astro";
+import Tag from "./Tags.astro";
+import Series from './Series.astro'
+import WidgetLayout from "./WidgetLayout.astro";
+import { profileConfig } from "../../config";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	class?: string;
+	headings?: MarkdownHeading[];
+        series?: string;
+}
+
+const className = Astro.props.class;
+const series = Astro.props.series;
+---
+<div id="sidebar" class:list={[className, "w-full"]}>
+    <div class="flex flex-col w-full gap-4 mb-4">
+        <Profile></Profile>
+    </div>
+    <div id="sidebar-sticky" class="transition-all duration-700 flex flex-col w-full gap-4 top-4 sticky top-4">
+        <!-- 始终渲染series容器，以确保Swup可以找到它 -->
+        <div id="series" class="flex flex-col w-full gap-4">
+            {/* 只有当series存在时才渲染内容 */}
+            { series && <Series series={ series }></Series> }
+        </div>
+        <Categories class="onload-animation" style="animation-delay: 150ms"></Categories>
+        <Tag class="onload-animation" style="animation-delay: 200ms"></Tag>
+        <WidgetLayout name="链接" id="links" class="onload-animation" style="animation-delay: 250ms">
+            <div class="flex flex-wrap gap-2 justify-center mb-1">
+                {profileConfig.links.map(item =>
+                    <a rel="me" aria-label={item.name} href={item.url} target="_blank" class="btn-regular rounded-lg h-10 w-10 active:scale-90">
+                        <Icon name={item.icon} class="text-[1.5rem]"></Icon>
+                    </a>
+                )}
+            </div>
+        </WidgetLayout>
+    </div>
+</div>
