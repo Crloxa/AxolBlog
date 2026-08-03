@@ -1,0 +1,108 @@
+---
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("posts")).filter((p) => !p.data.draft);
+const postCount = posts.length;
+
+// 字数统计：剔除代码块与 markdown 语法后，中文按字、拉丁文按词计算
+const strip = (md: string) =>
+	md
+		.replace(/```[\s\S]*?```/g, " ")
+		.replace(/[#>*`_\[\]()!\-~|]/g, " ")
+		.replace(/\s+/g, " ");
+
+const totalWords = posts.reduce((sum, p) => {
+	const text = strip(p.body);
+	const cjk = (text.match(/[一-鿿぀-ヿ가-힯]/g) || []).length;
+	const latin = (
+		text
+			.replace(/[一-鿿぀-ヿ가-힯]/g, " ")
+			.match(/[A-Za-z0-9']+/g) || []
+	).length;
+	return sum + cjk + latin;
+}, 0);
+
+const wordsText =
+	totalWords >= 1000 ? `${(totalWords / 1000).toFixed(1)}k` : String(totalWords);
+
+// 博客开始运行的时间（2026-08-01），可自行修改
+const startedAt = Date.parse("2026-08-01T00:00:00+08:00");
+---
+
+<div class="site-stats text-sm text-center leading-6">
+	<div>
+		共撰写了 <b class="stat-num">{postCount}</b> 篇文章 共
+		<b class="stat-num">{wordsText}</b> 字
+	</div>
+	<div>
+		访问人数 <b class="stat-num"><span id="busuanzi_value_site_uv">0</span></b> 总访问量
+		<b class="stat-num"><span id="busuanzi_value_site_pv">0</span></b>
+	</div>
+	<div>
+		博客已运行 <b class="stat-num"><span id="run-days">0</span></b> 天
+		<b class="stat-num"><span id="run-hours">0</span></b> 小时
+		<b class="stat-num"><span id="run-minutes">0</span></b> 分钟
+		<b class="stat-num"><span id="run-seconds">0</span></b> 秒
+	</div>
+</div>
+
+<script is:inline define:vars={{ startedAt }}>
+	(function () {
+		if (window.__axlSiteStatsInit) return;
+		window.__axlSiteStatsInit = true;
+
+		const started = startedAt;
+
+		const set = (id, v) => {
+			const el = document.getElementById(id);
+			if (el) el.textContent = String(v);
+		};
+
+		// 运行时长：每秒刷新
+		const tick = () => {
+			const diff = Math.max(0, Date.now() - started);
+			const s = Math.floor(diff / 1000);
+			set("run-days", Math.floor(s / 86400));
+			set("run-hours", Math.floor((s % 86400) / 3600));
+			set("run-minutes", Math.floor((s % 3600) / 60));
+			set("run-seconds", s % 60);
+		};
+		tick();
+		setInterval(tick, 1000);
+
+		// 不蒜子访客统计（免费服务，按域名计数；加载失败时保持 0）
+		const fetchCounts = () => {
+			const cb = "bz" + Date.now() + Math.floor(Math.random() * 1e4);
+			window[cb] = (d) => {
+				if (d.site_uv != null) set("busuanzi_value_site_uv", d.site_uv);
+				if (d.site_pv != null) set("busuanzi_value_site_pv", d.site_pv);
+				delete window[cb];
+			};
+			const s = document.createElement("script");
+			s.src = "https://busuanzi.ibruce.info/busuanzi?jsonpCallback=" + cb;
+			s.async = true;
+			s.onerror = () => {
+				delete window[cb];
+			};
+			document.head.appendChild(s);
+		};
+		fetchCounts();
+
+		// swup 客户端导航后，页脚被重新渲染，需重新拉取计数
+		let first = true;
+		document.addEventListener("astro:page-load", () => {
+			if (first) {
+				first = false;
+				return;
+			}
+			fetchCounts();
+		});
+	})();
+</script>
+
+<style>
+	.stat-num {
+		color: var(--primary);
+		font-weight: 600;
+	}
+</style>
