@@ -33,7 +33,7 @@
 	let currentIndex = 0;
 	let isPlaying = false;
 	let mode: PlayMode = "loop";
-	let volumePercent = 80;
+	let volumePercent = 10;
 	let currentTime = 0;
 	let duration = 0;
 	let isSeeking = false;

@@ -24,6 +24,7 @@ lang: ''
 
 所以不论用不用模板做，出于什么目的做的博客，当搓出来的时候，它的意义就实现了。
 
+::link-card{url="https://music.163.com/song?id=2622295727" title="coulou's cafe - trumpet meditation number fifteen" description="网易云音乐 · 点击跳转播放" image="https://p1.music.126.net/z2STbQq5frKRWKeSE003KA==/109951169916735498.jpg" icon="https://s1.music.126.net/style/favicon.ico?v20180823"}
 
 ---
 
