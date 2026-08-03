@@ -6,7 +6,7 @@
 
 ![Preview](preview.png)
 
-## ✨ 特性
+## 特性
 
 - 基于 Astro 5 + Tailwind CSS + Svelte 的静态站点，开箱即用、可静态托管
 - 支持 Markdown / MDX 博文，内置 KaTeX 数学公式、脚注、表格、折叠块
@@ -16,7 +16,7 @@
 - 内置 pagefind 全文搜索与 RSS 订阅
 - swup 无刷新页面切换
 
-## 🛠️ 本地开发
+## 本地开发
 
 ```bash
 # 安装依赖（pnpm）
@@ -37,7 +37,12 @@ npm run preview
 
 更详细的使用指南见 [blog_guidance.md](./blog_guidance.md)。
 
-## ⚠️ 声明
+## 部署地址
+```
+https://axolblog.axolrc.workers.dev/
+```
+
+## 声明
 
 本博客基于开源主题 [Asterris](https://github.com/yCENzh/Fuwari-yCENzh)（[Fuwari](https://github.com/saicaca/fuwari) 的 Astro 移植版）进行二次开发，在原作者基础上做了大量自定义修改。
 
