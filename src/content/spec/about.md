@@ -1,14 +1,8 @@
 # 关于
 
-<!-- 自我介绍写在这里：你是谁、兴趣、博客内容方向、如何联系你等，直接用 markdown 写即可 -->
-
-
-
 我是`Axol`，2024 级厦门大学软工专业某本科生，从做题环境长大的精神不太好的人，当然，做题能力也不及很多人。侥幸生在一个不错的时候，能做自己或许想做的事情
 
 这个世界风太大了，如果不写下点什么，恐怕自己是谁都会忘掉，所以萌生了做个博客网站的想法。以上。
-
-现在在听的歌：
 
 ::link-card{url="https://music.163.com/song?id=504264241" title="shelter - hakaisu/Alys" description="网易云音乐 · 点击跳转播放" image="https://p1.music.126.net/sdbcH2bH-t-6wU9J-DK82w==/109951163020032493.jpg" icon="https://s1.music.126.net/style/favicon.ico?v20180823"}
 
